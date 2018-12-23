@@ -52,6 +52,8 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         pressed ? 'DND ON' : 'DND OFF',
@@ -60,29 +62,29 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 25.0,
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                      ),
                       Text(
                         'Alarms',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontStyle: FontStyle.italic
-                        ),
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontStyle: FontStyle.italic),
                       ),
                       Text(
                         'Media',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                            fontStyle: FontStyle.italic
-                        ),
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontStyle: FontStyle.italic),
                       ),
                       Text(
                         'Touch Sounds',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                            fontStyle: FontStyle.italic
-                        ),
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontStyle: FontStyle.italic),
                       ),
                     ],
                   ),
