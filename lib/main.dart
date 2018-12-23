@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:async/async.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +13,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _platformChannel = MethodChannel('strangerweather.com/easy_dnd');
   bool pressed = false;
+
+  Future<Null> _dndOn() async {
+    await _platformChannel.invokeMethod('ON');
+  }
+
+  Future<Null> _dndOff() async {
+    await _platformChannel.invokeMethod('OFF');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.blueGrey),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Easy DND"),
+          title: Text('Easy DND'),
         ),
         body: GridView.count(
           crossAxisCount: 2,
@@ -37,14 +48,14 @@ class _MyAppState extends State<MyApp> {
                   setState(() {
                     pressed = !pressed;
                   });
-                  debugPrint("1st Example Tapped");
+                  pressed? _dndOn():_dndOff();
                 },
                 child: Center(
                   child: Text(
-                    pressed ? ("Example 1") : ("Victory!"),
+                    pressed ? ('DND ON') : ('DND OFF'),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30.0,
+                      fontSize: 25.0,
                     ),
                   ),
                 ),
@@ -55,7 +66,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 2",
+                  'Example 2',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -68,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 3",
+                  'Example 3',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -81,7 +92,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 4",
+                  'Example 4',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -94,7 +105,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 5",
+                  'Example 5',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -107,7 +118,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 6",
+                  'Example 6',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -120,7 +131,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 7",
+                  'Example 7',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -133,7 +144,7 @@ class _MyAppState extends State<MyApp> {
               elevation: 5.0,
               child: Center(
                 child: Text(
-                  "Example 8",
+                  'Example 8',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
