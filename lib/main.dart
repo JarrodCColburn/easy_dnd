@@ -48,15 +48,43 @@ class _MyAppState extends State<MyApp> {
                   setState(() {
                     pressed = !pressed;
                   });
-                  pressed? _dndOn():_dndOff();
+                  pressed ? _dndOn() : _dndOff();
                 },
                 child: Center(
-                  child: Text(
-                    pressed ? ('DND ON') : ('DND OFF'),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        pressed ? 'DND ON' : 'DND OFF',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25.0,
+                        ),
+                      ),
+                      Text(
+                        'Alarms',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontStyle: FontStyle.italic
+                        ),
+                      ),
+                      Text(
+                        'Media',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                            fontStyle: FontStyle.italic
+                        ),
+                      ),
+                      Text(
+                        'Touch Sounds',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                            fontStyle: FontStyle.italic
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
