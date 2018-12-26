@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:async/async.dart';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -13,15 +13,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _platformChannel = MethodChannel('strangerweather.com/easy_dnd');
+  final _platformChannel1 =
+      MethodChannel('strangerweather.com/easy_dnd/receiver');
+  final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
 
   Future<Null> _dndOn() async {
-    await _platformChannel.invokeMethod('ON');
+    await _platformChannel1.invokeMethod('ON');
   }
 
   Future<Null> _dndOff() async {
-    await _platformChannel.invokeMethod('OFF');
+    await _platformChannel1.invokeMethod('OFF');
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -56,10 +63,10 @@ class _MyAppState extends State<MyApp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        pressed ? 'DND ON' : 'DND OFF',
+                        pressed ? 'ON': 'OFF',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25.0,
+                          fontSize: 20.0,
                         ),
                       ),
                       Padding(
