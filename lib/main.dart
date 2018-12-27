@@ -14,9 +14,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _platformChannel1 =
-      MethodChannel('strangerweather.com/easy_dnd/receiver');
+  MethodChannel('strangerweather.com/easy_dnd/receiver');
   final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
+  final controller = StreamController<String>();
+  Stream<String> _statusStream;
+
+  _MyAppState() {
+    _statusStream = controller.stream;
+  }
 
   Future<Null> _dndOn() async {
     await _platformChannel1.invokeMethod('ON');
@@ -27,8 +33,26 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.close();
+  }
+
+  @override
   void initState() {
     super.initState();
+    _platformChannel2
+        .receiveBroadcastStream()
+        .listen(_onEvent, onError: _onError);
+  }
+
+  void _onEvent(Object event) {
+    controller.sink.add("$event");
+    print('$event');
+  }
+
+  void _onError(Object error) {
+    controller.sink.add("Error");
   }
 
   @override
@@ -61,13 +85,15 @@ class _MyAppState extends State<MyApp> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        pressed ? 'ON': 'OFF',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                        ),
+                    children: <Widget>[
+                      StreamBuilder<String>(
+                        stream: _statusStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            print("${snapshot.data}");
+                          }
+                          return Text('loading');
+                        },
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 10.0),
