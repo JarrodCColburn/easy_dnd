@@ -27,8 +27,8 @@ import io.flutter.view.FlutterView;
 
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL1 = "strangerweather.com/easy_dnd/receiver";
-    public static final String CHANNEL2 = "strangerweather.com/easy_dnd/stream";
-    public static String status;
+    private static final String CHANNEL2 = "strangerweather.com/easy_dnd/stream";
+    private static String status;
     DndBroadcastReceiver dndBroadcastReceiver = new DndBroadcastReceiver();
 
     @Override
@@ -39,6 +39,9 @@ public class MainActivity extends FlutterActivity {
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert mNotificationManager != null;
         if (mNotificationManager.isNotificationPolicyAccessGranted()) {
+            IntentFilter filter = new IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED);
+            registerReceiver(dndBroadcastReceiver, filter);
+
             checkStatus(getApplicationContext());
             updateStatus();
             dndOn();
@@ -49,21 +52,14 @@ public class MainActivity extends FlutterActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        IntentFilter filter = new IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED);
-        registerReceiver(dndBroadcastReceiver, filter);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         checkStatus(getApplicationContext());
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(dndBroadcastReceiver);
     }
 
@@ -108,35 +104,13 @@ public class MainActivity extends FlutterActivity {
         }
     }
 
-    public class DndBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED);
-            intentFilter.addCategory(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED);
-            if (NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED.equals(intent.getAction())) {
-                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                assert mNotificationManager != null;
-                if (mNotificationManager.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_NONE) {
-                    status = "none";
-                } else if (mNotificationManager.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALARMS) {
-                    status = "alarms";
-                } else if (mNotificationManager.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_ALL) {
-                    status = "all";
-                } else if (mNotificationManager.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_PRIORITY) {
-                    status = "priority";
-                } else if (mNotificationManager.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_UNKNOWN) {
-                    status = "unknown";
-                }
-            }
-        }
-    }
 
     private void updateStatus() {
         new EventChannel(getFlutterView(), CHANNEL2).setStreamHandler(
                 new EventChannel.StreamHandler() {
                     @Override
                     public void onListen(Object arguments, EventChannel.EventSink events) {
+
                         events.success(status);
                     }
 

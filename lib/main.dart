@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _platformChannel1 =
-  MethodChannel('strangerweather.com/easy_dnd/receiver');
+      MethodChannel('strangerweather.com/easy_dnd/receiver');
   final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
   final controller = StreamController<String>();
@@ -92,7 +92,11 @@ class _MyAppState extends State<MyApp> {
                           if (snapshot.hasData) {
                             print("${snapshot.data}");
                           }
-                          return Text('loading');
+                          return Text(
+                            "${snapshot.data}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 25.0),
+                          );
                         },
                       ),
                       Padding(
