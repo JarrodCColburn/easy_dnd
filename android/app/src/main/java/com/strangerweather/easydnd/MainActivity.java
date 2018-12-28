@@ -1,35 +1,29 @@
 package com.strangerweather.easydnd;
 
-import android.app.AlarmManager;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.View;
-import android.widget.EditText;
-
-import java.util.Objects;
+import android.util.Log;
 
 import io.flutter.app.FlutterActivity;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.EventChannel;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugins.GeneratedPluginRegistrant;
-import io.flutter.view.FlutterView;
 
 
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL1 = "strangerweather.com/easy_dnd/receiver";
     private static final String CHANNEL2 = "strangerweather.com/easy_dnd/stream";
-    private static String status;
-    DndBroadcastReceiver dndBroadcastReceiver = new DndBroadcastReceiver();
+    private DndBroadcastReceiver dndBroadcastReceiver = new DndBroadcastReceiver();
+    private int status;
+
+    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +39,13 @@ public class MainActivity extends FlutterActivity {
             checkStatus(getApplicationContext());
             updateStatus();
             dndOn();
+
+            Intent i = getIntent();
+            Bundle extras = i.getExtras();
+            assert extras != null;
+            String user_name = extras.getString("USER_NAME");
+            System.out.println(user_name);
+
         } else {
             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
             startActivity(intent);
@@ -87,21 +88,9 @@ public class MainActivity extends FlutterActivity {
     }
 
     private void checkStatus(Context context) {
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (mNotificationManager != null) {
-            int notificationStatus = mNotificationManager.getCurrentInterruptionFilter();
-            if (notificationStatus == 4) {
-                status = "alarms";
-            } else if (notificationStatus == 1) {
-                status = "all";
-            } else if (notificationStatus == 3) {
-                status = "none";
-            } else if (notificationStatus == 2) {
-                status = "priority";
-            } else if (notificationStatus == 0) {
-                status = "unknown";
-            }
-        }
+        NotificationManager systemService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        assert systemService != null;
+        status = systemService.getCurrentInterruptionFilter();
     }
 
 
@@ -110,8 +99,8 @@ public class MainActivity extends FlutterActivity {
                 new EventChannel.StreamHandler() {
                     @Override
                     public void onListen(Object arguments, EventChannel.EventSink events) {
-
                         events.success(status);
+                        System.out.println(status);
                     }
 
                     @Override
@@ -120,6 +109,7 @@ public class MainActivity extends FlutterActivity {
                 }
         );
     }
+
 }
 
 

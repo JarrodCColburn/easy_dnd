@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class DndBroadcastReceiver extends BroadcastReceiver {
 
@@ -16,7 +17,12 @@ public class DndBroadcastReceiver extends BroadcastReceiver {
             NotificationManager systemService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             assert systemService != null;
             int status = systemService.getCurrentInterruptionFilter();
-            System.out.println(status);
+
+            Bundle extras = new Bundle();
+            extras.putString("USER_NAME","John Doe");
+            intent = new Intent(context, MainActivity.class);
+            intent.putExtras(extras);
+            context.startActivity(intent);
         }
     }
 }

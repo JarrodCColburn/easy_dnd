@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _platformChannel1 =
-      MethodChannel('strangerweather.com/easy_dnd/receiver');
+  MethodChannel('strangerweather.com/easy_dnd/receiver');
   final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
   final controller = StreamController<String>();
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
                           return Text(
                             "${snapshot.data}",
                             style:
-                                TextStyle(color: Colors.white, fontSize: 25.0),
+                            TextStyle(color: Colors.white, fontSize: 25.0),
                           );
                         },
                       ),
@@ -128,98 +128,59 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            Card(
+            Example(
+              text: 'Example 2',
               color: Color.fromARGB(255, 3, 169, 244),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 2',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 3',
               color: Color.fromARGB(255, 255, 87, 34),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 3',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 4',
               color: Color.fromARGB(255, 255, 193, 7),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 4',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 5',
               color: Color.fromARGB(255, 63, 81, 181),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 5',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 6',
               color: Color.fromARGB(255, 156, 39, 176),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 6',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 7',
               color: Color.fromARGB(255, 233, 30, 99),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 7',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
-            Card(
+            Example(
+              text: 'Example 8',
               color: Color.fromARGB(255, 121, 85, 72),
-              elevation: 5.0,
-              child: Center(
-                child: Text(
-                  'Example 8',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Example extends StatelessWidget {
+  Example({@required this.text, this.color = Colors.white});
+
+  final Color color;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    Card(
+      color: color,
+      elevation: 5.0,
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+          ),
         ),
       ),
     );
