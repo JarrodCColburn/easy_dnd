@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:easy_dnd/Cards/card_1.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +18,11 @@ class _MyAppState extends State<MyApp> {
   final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
   final controller = StreamController<String>();
+  Stream<String> _statusStream;
 
+  _MyAppState() {
+    _statusStream = controller.stream;
+  }
 
   Future<Null> _dndOn() async {
     await _platformChannel1.invokeMethod('ON');
@@ -67,7 +70,42 @@ class _MyAppState extends State<MyApp> {
             mainAxisSpacing: 4.0,
             crossAxisSpacing: 4.0,
             children: <Widget>[
-              CardOne(),
+              Card(
+                color: Color.fromARGB(255, 76, 175, 80),
+                elevation: 5.0,
+                child: InkWell(
+                  splashColor: Colors.blueGrey,
+                  onTap: () {
+                    setState(() {
+                      pressed = !pressed;
+                    });
+                    pressed ? _dndOn() : _dndOff();
+                  },
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: StreamBuilder<String>(
+                            stream: _statusStream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {}
+                              return Text(
+                                "${snapshot.data}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20.0),
+                                textAlign: TextAlign.center,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Card(
                 color: Color.fromARGB(255, 3, 169, 244),
                 elevation: 5.0,
