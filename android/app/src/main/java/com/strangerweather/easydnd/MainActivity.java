@@ -1,12 +1,18 @@
 package com.strangerweather.easydnd;
 
 import android.app.NotificationManager;
+import android.app.admin.DevicePolicyManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.EventChannel;
@@ -20,10 +26,9 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 public class MainActivity extends FlutterActivity {
     private static final String CHANNEL1 = "strangerweather.com/easy_dnd/receiver";
     private static final String CHANNEL2 = "strangerweather.com/easy_dnd/stream";
-    private DndBroadcastReceiver dndBroadcastReceiver = new DndBroadcastReceiver();
-    private int status;
+    private int state;
+    public static final String SHARED_PREFS = "sharedPrefs";
 
-    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +38,8 @@ public class MainActivity extends FlutterActivity {
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert mNotificationManager != null;
         if (mNotificationManager.isNotificationPolicyAccessGranted()) {
-            IntentFilter filter = new IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED);
-            registerReceiver(dndBroadcastReceiver, filter);
-
-            checkStatus(getApplicationContext());
-            updateStatus();
+            streamStatus();
             dndOn();
-
-            Intent i = getIntent();
-            Bundle extras = i.getExtras();
-            assert extras != null;
-            String user_name = extras.getString("USER_NAME");
-            System.out.println(user_name);
 
         } else {
             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
@@ -55,14 +50,8 @@ public class MainActivity extends FlutterActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkStatus(getApplicationContext());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(dndBroadcastReceiver);
-    }
 
     private void dndOn() {
         new MethodChannel(getFlutterView(), CHANNEL1).setMethodCallHandler(new MethodCallHandler() {
@@ -87,27 +76,100 @@ public class MainActivity extends FlutterActivity {
         });
     }
 
-    private void checkStatus(Context context) {
-        NotificationManager systemService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    private void checkStatus(final EventChannel.EventSink events) {
+        NotificationManager systemService = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         assert systemService != null;
-        status = systemService.getCurrentInterruptionFilter();
+        state = systemService.getCurrentInterruptionFilter();
+        String result;
+        switch (state) {
+            case 1:
+                events.success(result = "OFF\n\nAll Notifications Accepted");
+                break;
+            case 2:
+                events.success(result = "ON\n\nNo Notifications Accepted Except Priority Ones");
+                break;
+            case 3:
+                events.success(result = "ON\n\nNo Notifications Accepted");
+                break;
+            case 4:
+                events.success(result = "ON\n\nNo Notifications Accepted Except Alarms");
+                break;
+            default:
+                events.error(result = "UNAVAILABLE", "Status Unavailable", null);
+                break;
+        }
+        events.success(result);
     }
 
 
-    private void updateStatus() {
+    private void streamStatus() {
         new EventChannel(getFlutterView(), CHANNEL2).setStreamHandler(
                 new EventChannel.StreamHandler() {
+
+                    private BroadcastReceiver changeReceiver;
+
                     @Override
                     public void onListen(Object arguments, EventChannel.EventSink events) {
-                        events.success(status);
-                        System.out.println(status);
+                        checkStatus(events);
+                        changeReceiver = newBroadcastReceiver(events);
+                        registerReceiver(changeReceiver, new IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED));
                     }
 
                     @Override
                     public void onCancel(Object arguments) {
+                        unregisterReceiver(changeReceiver);
+                        changeReceiver = null;
                     }
                 }
         );
+    }
+
+    private BroadcastReceiver newBroadcastReceiver(final EventChannel.EventSink events) {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                assert action != null;
+                if (action.equals(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED)) {
+                    NotificationManager systemService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    assert systemService != null;
+                    state = systemService.getCurrentInterruptionFilter();
+                    String result;
+                    switch (state) {
+                        case 1:
+                            events.success(result = "OFF\n\nAll Notifications Accepted");
+                            break;
+                        case 2:
+                            events.success(result = "ON\n\nNo Notifications Accepted Except Priority Ones");
+                            break;
+                        case 3:
+                            events.success(result = "ON\n\nNo Notifications Accepted");
+                            break;
+                        case 4:
+                            events.success(result = "ON\n\nNo Notifications Accepted Except Alarms");
+                            break;
+                        default:
+                            events.error(result = "UNAVAILABLE", "Status Unavailable", null);
+                            break;
+                    }
+                    events.success(result);
+                    saveData();
+                }
+            }
+        };
+    }
+
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("State", state);
+        editor.apply();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        int newState = sharedPreferences.getInt("State", state);
     }
 
 }
