@@ -6,21 +6,22 @@ import 'package:flutter/services.dart';
 class CardOne extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _CardOneState();
   }
 }
 
 class _CardOneState extends State<CardOne> {
   final _platformChannel1 =
-  MethodChannel('strangerweather.com/easy_dnd/receiver');
+      MethodChannel('strangerweather.com/easy_dnd/receiver');
   final _platformChannel2 = EventChannel('strangerweather.com/easy_dnd/stream');
   bool pressed = false;
   final controller = StreamController<String>();
   Stream<String> _statusStream;
 
   _CardOneState() {
-    _statusStream = controller.stream;
+    setState(() {
+      _statusStream = controller.stream;
+    });
   }
 
   Future<Null> _dndOn() async {
@@ -56,7 +57,6 @@ class _CardOneState extends State<CardOne> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Card(
       color: Color.fromARGB(255, 76, 175, 80),
       elevation: 5.0,

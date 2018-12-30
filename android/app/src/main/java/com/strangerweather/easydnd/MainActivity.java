@@ -68,6 +68,10 @@ public class MainActivity extends FlutterActivity {
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
                         break;
+                    case "ALARMS ONLY ON":
+                        assert mNotificationManager != null;
+                        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
+                        break;
                     default:
                         result.notImplemented();
                         break;
