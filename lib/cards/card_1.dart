@@ -19,9 +19,7 @@ class _CardOneState extends State<CardOne> {
   Stream<String> _statusStream;
 
   _CardOneState() {
-    setState(() {
       _statusStream = controller.stream;
-    });
   }
 
   Future<Null> _dndOn() async {
@@ -30,6 +28,7 @@ class _CardOneState extends State<CardOne> {
 
   Future<Null> _dndOff() async {
     await _platformChannel1.invokeMethod('OFF');
+
   }
 
   @override
@@ -94,3 +93,7 @@ class _CardOneState extends State<CardOne> {
     );
   }
 }
+
+
+
+
