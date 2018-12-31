@@ -12,7 +12,6 @@ class CardOne extends StatefulWidget {
 
 class _CardOneState extends State<CardOne> {
   bool pressed = false;
-  StreamChannel streamChannel = new StreamChannel();
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,7 @@ class _CardOneState extends State<CardOne> {
       home: ScopedModel<AppModel>(
         model: AppModel(),
         child: ScopedModelDescendant<AppModel>(
-          builder: (context, child, model) =>
-              Card(
+          builder: (context, child, model) => Card(
                 color: Color.fromARGB(255, 76, 175, 80),
                 elevation: 5.0,
                 child: InkWell(
@@ -38,10 +36,7 @@ class _CardOneState extends State<CardOne> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Padding(
-                              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                              child:
-                          ),
+                          StreamChannel(),
                         ],
                       ),
                     );

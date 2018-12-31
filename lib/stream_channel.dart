@@ -27,15 +27,12 @@ class _StreamChannelState extends State<StreamChannel> {
   }
 
   void _onEvent(Object event) {
-    setState(() {
       controller.sink.add("$event");
-    });
+      print(event);
   }
 
   void _onError(Object error) {
-    setState(() {
       controller.sink.add("Error");
-    });
   }
 
   @override
