@@ -1,3 +1,4 @@
+import 'package:easy_dnd/cards/card_2.dart';
 import 'package:easy_dnd/model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -12,7 +13,6 @@ class CardOne extends StatefulWidget {
 
 class _CardOneState extends State<CardOne> {
   bool pressed = false;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,7 +36,7 @@ class _CardOneState extends State<CardOne> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          StreamChannel(),
+
                         ],
                       ),
                     );
