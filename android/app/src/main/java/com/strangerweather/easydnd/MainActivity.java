@@ -87,16 +87,16 @@ public class MainActivity extends FlutterActivity {
         String result;
         switch (state) {
             case 1:
-                events.success(result = "OFF\n\nAll Notifications Accepted");
+                events.success(result = "OFF\n\nAll Interruptions Accepted");
                 break;
             case 2:
-                events.success(result = "ON\n\nNo Notifications Accepted Except Priority Ones");
+                events.success(result = "ON\n\nNo Interruptions Except Priority Ones");
                 break;
             case 3:
-                events.success(result = "ON\n\nNo Notifications Accepted");
+                events.success(result = "ON\n\nNo Interruptions Accepted");
                 break;
             case 4:
-                events.success(result = "ON\n\nNo Notifications Accepted Except Alarms");
+                events.success(result = "ON\n\nNo Interruptions Except Alarms");
                 break;
             default:
                 events.error(result = "UNAVAILABLE", "Status Unavailable", null);
@@ -141,16 +141,16 @@ public class MainActivity extends FlutterActivity {
                     String result;
                     switch (state) {
                         case 1:
-                            events.success(result = "OFF\n\nAll Notifications Accepted");
+                            events.success(result = "OFF\n\nAll Interruptions Accepted");
                             break;
                         case 2:
-                            events.success(result = "ON\n\nNo Notifications Accepted Except Priority Ones");
+                            events.success(result = "ON\n\nNo Interruptions Except Priority Ones");
                             break;
                         case 3:
-                            events.success(result = "ON\n\nNo Notifications Accepted");
+                            events.success(result = "ON\n\nNo Interruptions Accepted");
                             break;
                         case 4:
-                            events.success(result = "ON\n\nNo Notifications Accepted Except Alarms");
+                            events.success(result = "ON\n\nNo Interruptions Except Alarms");
                             break;
                         default:
                             events.error(result = "UNAVAILABLE", "Status Unavailable", null);
