@@ -72,6 +72,10 @@ public class MainActivity extends FlutterActivity {
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
                         break;
+                    case "PRIORITY ONLY ON":
+                        assert mNotificationManager != null;
+                        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+                        break;
                     default:
                         result.notImplemented();
                         break;
@@ -85,6 +89,7 @@ public class MainActivity extends FlutterActivity {
         assert systemService != null;
         state = systemService.getCurrentInterruptionFilter();
         String result;
+
         switch (state) {
             case 1:
                 events.success(result = "OFF\n\nAll Interruptions Accepted");

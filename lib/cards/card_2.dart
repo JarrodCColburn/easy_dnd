@@ -61,7 +61,7 @@ class _CardTwoState extends State<CardTwo> {
                           snapshot.data.toString().contains(
                               'No Interruptions Except Priority Ones')) {
                         return Text(
-                          'NO ALARMS',
+                          'No Alarms',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                           textAlign: TextAlign.center,
                         );

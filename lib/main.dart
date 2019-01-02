@@ -1,10 +1,15 @@
 import 'package:easy_dnd/cards/card_1.dart';
 import 'package:easy_dnd/cards/card_2.dart';
+import 'package:easy_dnd/cards/card_3.dart';
 import 'package:easy_dnd/inherited_widget_class.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(StatusStream(child: MyApp()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(StatusStream(child: MyApp()));
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -33,20 +38,17 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             CardOne(),
             CardTwo(),
+            CardThree(),
             Example(
-              text: 'Block Priority',
-              color: Color.fromARGB(255, 255, 87, 34),
-            ),
-            Example(
-              text: 'No Sound from Notifications',
+              text: 'PRIORITY SETTINGS',
               color: Color.fromARGB(255, 255, 193, 7),
             ),
             Example(
-              text: 'Example 5',
+              text: 'MEDIA ON',
               color: Color.fromARGB(255, 63, 81, 181),
             ),
             Example(
-              text: 'Example 6',
+              text: 'NOTIFICATIONS ON',
               color: Color.fromARGB(255, 156, 39, 176),
             ),
             Example(
@@ -54,7 +56,7 @@ class _MyAppState extends State<MyApp> {
               color: Color.fromARGB(255, 233, 30, 99),
             ),
             Example(
-              text: 'Example 8',
+              text: 'ADVANCED SETTINGS',
               color: Color.fromARGB(255, 121, 85, 72),
             ),
           ],
