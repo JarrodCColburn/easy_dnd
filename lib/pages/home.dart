@@ -1,6 +1,7 @@
 import 'package:easy_dnd/cards/card_1.dart';
 import 'package:easy_dnd/cards/card_2.dart';
 import 'package:easy_dnd/cards/card_3.dart';
+import 'package:easy_dnd/cards/card_4.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,10 +21,7 @@ class HomePage extends StatelessWidget {
           CardOne(),
           CardTwo(),
           CardThree(),
-          Example(
-            text: 'PRIORITY SETTINGS',
-            color: Color.fromARGB(255, 255, 193, 7),
-          ),
+          CardFour(),
           Example(
             text: 'MEDIA ON',
             color: Color.fromARGB(255, 63, 81, 181),
