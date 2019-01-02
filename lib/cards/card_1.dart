@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:easy_dnd/inherited_widget_class.dart';
 import 'package:easy_dnd/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CardOne extends StatefulWidget {

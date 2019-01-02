@@ -18,7 +18,7 @@ class _StatusStreamState extends State<StatusStream>{
   static const EventChannel eventChannel =
   EventChannel('strangerweather.com/easy_dnd/stream');
   static final controller = StreamController<String>();
-  var statusStream = controller.stream;
+  var statusStream = controller.stream.asBroadcastStream();
 
   @override
   void dispose() {
@@ -34,7 +34,6 @@ class _StatusStreamState extends State<StatusStream>{
 
   void _onEvent(Object event) {
     controller.sink.add("$event");
-    print (event);
   }
 
   void _onError(Object error) {
