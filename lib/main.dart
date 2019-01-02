@@ -1,9 +1,10 @@
 import 'package:easy_dnd/cards/card_1.dart';
 import 'package:easy_dnd/cards/card_2.dart';
+import 'package:easy_dnd/inherited_widget_class.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(StatusStream(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {

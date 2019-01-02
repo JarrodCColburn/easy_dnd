@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_dnd/inherited_widget_class.dart';
 import 'package:easy_dnd/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,33 +15,11 @@ class CardOne extends StatefulWidget {
 
 class _CardOneState extends State<CardOne> {
   bool pressed = false;
-  static const EventChannel eventChannel =
-      EventChannel('strangerweather.com/easy_dnd/stream');
-  static final controller = StreamController<String>();
-  var _statusStream = controller.stream;
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.close();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
-  }
-
-  void _onEvent(Object event) {
-    controller.sink.add("$event");
-  }
-
-  void _onError(Object error) {
-    controller.sink.add("Error");
-  }
 
   @override
   Widget build(BuildContext context) {
+    final stream = StatusInheritedWidget.of(context).inheritedStatusStream;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blueGrey),
@@ -66,7 +45,7 @@ class _CardOneState extends State<CardOne> {
                         Padding(
                           padding: EdgeInsets.only(left: 10.0, right: 10.0),
                           child: StreamBuilder<String>(
-                            stream: _statusStream,
+                            stream: stream,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {}
                               return Text(
