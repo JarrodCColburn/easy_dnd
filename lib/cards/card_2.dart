@@ -1,4 +1,4 @@
-import 'package:easy_dnd/inherited_widget_class.dart';
+import 'package:easy_dnd/state_management/inherited_widget_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
