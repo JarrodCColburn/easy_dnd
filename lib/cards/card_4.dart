@@ -1,3 +1,4 @@
+import 'package:easy_dnd/pages/settings.dart';
 import 'package:flutter/material.dart';
 
 class CardFour extends StatefulWidget {
@@ -15,7 +16,12 @@ class _CardFourState extends State<CardFour> {
       elevation: 5.0,
       child: InkWell(
         splashColor: Colors.blueGrey,
-        onTap: () {},
+        onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => SettingsPage(),
+              ),
+            ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -28,6 +34,14 @@ class _CardFourState extends State<CardFour> {
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                   textAlign: TextAlign.center,
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 10.0),
+              ),
+              Icon(
+                Icons.touch_app,
+                color: Colors.white,
+                size: 80.0,
               ),
             ],
           ),
