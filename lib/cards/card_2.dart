@@ -29,7 +29,7 @@ class _CardTwoState extends State<CardTwo> with TickerProviderStateMixin {
     super.initState();
 
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
 
     _animation = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
       parent: _controller,

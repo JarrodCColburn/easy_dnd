@@ -91,6 +91,7 @@ class _CardOneState extends State<CardOne> with TickerProviderStateMixin {
       },
     );
   }
+
   @override
   void dispose() {
     _controller.dispose();
