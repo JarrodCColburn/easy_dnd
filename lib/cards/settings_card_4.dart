@@ -35,6 +35,12 @@ final settingsCircle = Container(
     color: Colors.orange,
     shape: BoxShape.circle,
   ),
+  child: Center(
+    child: Icon(
+      Icons.not_interested,
+      color: Colors.white70,
+      size: 50.0,),
+  ),
 );
 
 final settingsCard = Container(
@@ -51,5 +57,10 @@ final settingsCard = Container(
             offset: Offset(0.0, 10.0)
         )
       ]
+  ),  child: Center(
+  child: Text(
+    'No phone calls',
+    style: TextStyle(color: Colors.white, fontSize: 20.0),
   ),
+),
 );

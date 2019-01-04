@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-
-class SettingsCardThree extends StatelessWidget{
+class SettingsCardThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: 16.0,
@@ -20,10 +18,8 @@ class SettingsCardThree extends StatelessWidget{
   }
 }
 
-
 final settingsThumbnail = Container(
-  margin: EdgeInsets.symmetric(
-      vertical: 16.0),
+  margin: EdgeInsets.symmetric(vertical: 16.0),
   alignment: FractionalOffset.centerLeft,
   child: settingsCircle,
 );
@@ -34,6 +30,13 @@ final settingsCircle = Container(
   decoration: new BoxDecoration(
     color: Colors.orange,
     shape: BoxShape.circle,
+  ),
+  child: Center(
+    child: Icon(
+      Icons.star,
+      color: Colors.white70,
+      size: 50.0,
+    ),
   ),
 );
 
@@ -46,10 +49,12 @@ final settingsCard = Container(
       borderRadius: BorderRadius.circular(8.0),
       boxShadow: <BoxShadow>[
         BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0.0, 10.0)
-        )
-      ]
+            color: Colors.black12, blurRadius: 10, offset: Offset(0.0, 10.0))
+      ]),
+  child: Center(
+    child: Text(
+      'Starred Contacts Only',
+      style: TextStyle(color: Colors.white, fontSize: 20.0),
+    ),
   ),
 );
