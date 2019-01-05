@@ -1,9 +1,8 @@
-import 'package:easy_dnd/cards/card_1.dart';
-import 'package:easy_dnd/cards/card_3.dart';
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 
 class DrawIn extends StatefulWidget {
-  final child;
+  Widget child;
 
   DrawIn({Key key, this.child}) : super(key: key);
 
@@ -13,30 +12,28 @@ class DrawIn extends StatefulWidget {
   }
 }
 
-class DrawInState extends State<DrawIn> with TickerProviderStateMixin {
+class DrawInState extends State<DrawIn>
+    with TickerProviderStateMixin, AfterLayoutMixin<DrawIn> {
   AnimationController _controller;
   Animation _animation;
+
+  void afterFirstLayout(BuildContext context) {
+    _controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    _controller.forward();
     return AnimatedBuilder(
       animation: _controller,
+      child: widget.child,
       builder: (BuildContext context, Widget child) {
-        return Scaffold(
-          body: Transform(
-            transform:
-                Matrix4.translationValues(_animation.value * width, 0.0, 0.0),
-            child: Expanded(child: Column(
-              children: <Widget>[
-                CardOne(),
-                CardThree(),
-              ],
-            ),
-            ), ),
+        return Transform(
+          transform:
+              Matrix4.translationValues(_animation.value * width, 0.0, 0.0),
+          child: Expanded(child: child),
         );
-        },
+      },
     );
   }
 
