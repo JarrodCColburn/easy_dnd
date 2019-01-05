@@ -19,15 +19,10 @@ class HomePage extends StatelessWidget {
         mainAxisSpacing: 4.0,
         crossAxisSpacing: 4.0,
         children: <Widget>[
-          DrawIn(
-            child: CardOne(),
-          ),
-          CardTwo(),
-          DrawIn(
-            child:CardThree(),
-          ),
-
-          CardFour(),
+          DrawIn(child: CardOne()),
+          DrawIn(child: CardTwo()),
+          DrawIn(child: CardThree()),
+          DrawIn(child: CardFour()),
           Example(
             text: 'MEDIA ON',
             color: Color.fromARGB(255, 63, 81, 181),
