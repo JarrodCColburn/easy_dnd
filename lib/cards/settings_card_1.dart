@@ -1,3 +1,4 @@
+import 'package:easy_dnd/animations/draw_in_effect.dart';
 import 'package:flutter/material.dart';
 
 class SettingsCardOne extends StatelessWidget {
@@ -35,7 +36,8 @@ final settingsCircle = Container(
     child: Icon(
       Icons.phone_in_talk,
       color: Colors.white70,
-      size: 50.0,),
+      size: 50.0,
+    ),
   ),
 );
 

@@ -1,3 +1,4 @@
+import 'package:easy_dnd/animations/draw_in_effect.dart';
 import 'package:easy_dnd/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_dnd/animations/settings_route.dart';

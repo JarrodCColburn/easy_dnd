@@ -1,3 +1,4 @@
+import 'package:easy_dnd/animations/draw_in_effect.dart';
 import 'package:easy_dnd/cards/card_1.dart';
 import 'package:easy_dnd/cards/card_2.dart';
 import 'package:easy_dnd/cards/card_3.dart';
@@ -18,9 +19,14 @@ class HomePage extends StatelessWidget {
         mainAxisSpacing: 4.0,
         crossAxisSpacing: 4.0,
         children: <Widget>[
-          CardOne(),
+          DrawIn(
+            child: CardOne(),
+          ),
           CardTwo(),
-          CardThree(),
+          DrawIn(
+            child:CardThree(),
+          ),
+
           CardFour(),
           Example(
             text: 'MEDIA ON',
