@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           DrawIn(child: CardOne()),
           DrawIn(child: CardTwo()),
-          DrawIn(child: CardThree()),
-          DrawIn(child: CardFour()),
+          CardThree(),
+          CardFour(),
           Example(
             text: 'MEDIA ON',
             color: Color.fromARGB(255, 63, 81, 181),

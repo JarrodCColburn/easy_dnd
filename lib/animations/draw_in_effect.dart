@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 
 class DrawIn extends StatefulWidget {
-  Widget child;
+  final Widget child;
 
   DrawIn({Key key, this.child}) : super(key: key);
 
@@ -31,7 +31,7 @@ class DrawInState extends State<DrawIn>
         return Transform(
           transform:
               Matrix4.translationValues(_animation.value * width, 0.0, 0.0),
-          child: Expanded(child: child),
+          child: child,
         );
       },
     );
