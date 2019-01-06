@@ -19,25 +19,33 @@ class HomePage extends StatelessWidget {
         mainAxisSpacing: 4.0,
         crossAxisSpacing: 4.0,
         children: <Widget>[
-          DrawIn(child: CardOne()),
-          DrawIn(child: CardTwo()),
-          CardThree(),
-          CardFour(),
-          Example(
-            text: 'MEDIA ON',
-            color: Color.fromARGB(255, 63, 81, 181),
+          DrawInLeft(child: CardOne()),
+          DrawInRight(child: CardTwo()),
+          DrawInLeft(child: CardThree()),
+          DrawInRight(child: CardFour()),
+          DrawInLeft(
+            child: Example(
+              text: 'MEDIA ON',
+              color: Color.fromARGB(255, 63, 81, 181),
+            ),
           ),
-          Example(
-            text: 'NOTIFICATIONS ON',
-            color: Color.fromARGB(255, 156, 39, 176),
+          DrawInRight(
+            child: Example(
+              text: 'NOTIFICATIONS ON',
+              color: Color.fromARGB(255, 156, 39, 176),
+            ),
           ),
-          Example(
-            text: 'Example 7',
-            color: Color.fromARGB(255, 233, 30, 99),
+          DrawInLeft(
+            child: Example(
+              text: 'Example 7',
+              color: Color.fromARGB(255, 233, 30, 99),
+            ),
           ),
-          Example(
-            text: 'ADVANCED SETTINGS',
-            color: Color.fromARGB(255, 121, 85, 72),
+          DrawInRight(
+            child: Example(
+              text: 'ADVANCED SETTINGS',
+              color: Color.fromARGB(255, 121, 85, 72),
+            ),
           ),
         ],
       ),
