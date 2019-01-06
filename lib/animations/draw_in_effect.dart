@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:after_layout/after_layout.dart';
 
 class DrawIn extends StatefulWidget {
   final Widget child;
@@ -12,14 +11,9 @@ class DrawIn extends StatefulWidget {
   }
 }
 
-class DrawInState extends State<DrawIn>
-    with TickerProviderStateMixin, AfterLayoutMixin<DrawIn> {
+class DrawInState extends State<DrawIn> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation _animation;
-
-  void afterFirstLayout(BuildContext context) {
-    _controller.forward();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +42,7 @@ class DrawInState extends State<DrawIn>
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
+    _controller.forward();
   }
 
   @override
