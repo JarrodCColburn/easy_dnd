@@ -1,7 +1,6 @@
-import 'package:easy_dnd/animations/draw_in_effect.dart';
 import 'package:easy_dnd/pages/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_dnd/animations/settings_route.dart';
+
 
 class CardFour extends StatefulWidget {
   @override
@@ -20,7 +19,7 @@ class _CardFourState extends State<CardFour> {
         splashColor: Colors.blueGrey,
         onTap: () => Navigator.push(
               context,
-              SettingsRoute(
+              MaterialPageRoute(
                 builder: (BuildContext context) => SettingsPage(),
               ),
             ),
