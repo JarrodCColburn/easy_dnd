@@ -8,7 +8,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class SettingsPageState extends State<SettingsPage> {
-  var listItem;
   List<RadioModel> settingsCards = new List<RadioModel>();
 
   @override
@@ -45,25 +44,24 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    listItem = ListView.builder(
-        itemCount: settingsCards.length,
-        itemBuilder: (BuildContext context, index) {
-          return GestureDetector(onTap: () {
-            setState(() {
-              setState(() {
-                settingsCards.forEach((element) => element.isSelected = false);
-                settingsCards[index].isSelected = true;
-              });
-              RadioItem(settingsCards[index]);
-            });
-          });
-        });
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Easy DND'),
       ),
-      body: listItem,
+      body: ListView.builder(
+        itemCount: settingsCards.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                settingsCards.forEach((element) => element.isSelected = false);
+                settingsCards[index].isSelected = true;
+              });
+            },
+            child: RadioItem(settingsCards[index]),
+          );
+        },
+      ),
     );
   }
 }
@@ -86,7 +84,7 @@ class RadioItem extends StatelessWidget {
             height: 124.0,
             margin: EdgeInsets.only(left: 46.0),
             decoration: BoxDecoration(
-                color: _item.isSelected ? _item.color : Colors.blueGrey,
+                color: _item.isSelected ? Colors.blueGrey : _item.color,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: <BoxShadow>[
@@ -110,8 +108,8 @@ class RadioItem extends StatelessWidget {
               height: 92.0,
               decoration: new BoxDecoration(
                 color: _item.isSelected
-                    ? Colors.orange
-                    : Color.fromARGB(255, 69, 90, 100),
+                    ? Color.fromARGB(255, 69, 90, 100)
+                    : Colors.orange,
                 shape: BoxShape.circle,
               ),
               child: Center(
