@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -56,6 +57,7 @@ class SettingsPageState extends State<SettingsPage> {
               setState(() {
                 settingsCards.forEach((element) => element.isSelected = false);
                 settingsCards[index].isSelected = true;
+                saveSelectedCardPreference(index);
               });
             },
             child: RadioItem(settingsCards[index]),
@@ -64,6 +66,11 @@ class SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+}
+
+Future<bool> saveSelectedCardPreference(int newIndex) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setInt('card', newIndex);
 }
 
 class RadioItem extends StatelessWidget {
