@@ -10,36 +10,52 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   List<RadioModel> settingsCards = new List<RadioModel>();
+  bool status = false;
 
   @override
   void initState() {
     super.initState();
 
+    int newIndex;
+    loadSelectedCard(newIndex);
+
+    if (newIndex == 0) {
+      status = true;
+    }    if (newIndex == 1) {
+      status = true;
+    }    if (newIndex == 2) {
+      status = true;
+    }    if (newIndex == 3) {
+      status = true;
+    }    if (newIndex == 4) {
+      status = true;
+    }
+
     settingsCards.add(RadioModel(
-      false,
+      status,
       Icons.phone_in_talk,
       Color.fromARGB(255, 76, 175, 80),
       'All Phone Calls',
     ));
     settingsCards.add(RadioModel(
-      false,
+      status,
       Icons.contact_phone,
       Color.fromARGB(255, 3, 169, 244),
       'Contacts Only',
     ));
     settingsCards.add(RadioModel(
-      false,
+      status,
       Icons.star,
       Color.fromARGB(255, 255, 87, 34),
       'Starred Contacts Only',
     ));
     settingsCards.add(RadioModel(
-      false,
+      status,
       Icons.not_interested,
       Color.fromARGB(255, 255, 193, 7),
       'No Phone Calls',
     ));
-    settingsCards.add(RadioModel(false, Icons.repeat,
+    settingsCards.add(RadioModel(status, Icons.repeat,
         Color.fromARGB(255, 63, 81, 181), 'Allow Repeat Callers'));
   }
 
@@ -57,7 +73,7 @@ class SettingsPageState extends State<SettingsPage> {
               setState(() {
                 settingsCards.forEach((element) => element.isSelected = false);
                 settingsCards[index].isSelected = true;
-                saveSelectedCardPreference(index);
+                saveSelectedCard(index);
               });
             },
             child: RadioItem(settingsCards[index]),
@@ -68,9 +84,16 @@ class SettingsPageState extends State<SettingsPage> {
   }
 }
 
-Future<bool> saveSelectedCardPreference(int newIndex) async {
+Future<bool> saveSelectedCard(int newIndex) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.setInt('card', newIndex);
+}
+
+Future<int> loadSelectedCard(int newIndex) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  newIndex = prefs.getInt('card');
+  print(newIndex);
+  return newIndex;
 }
 
 class RadioItem extends StatelessWidget {
