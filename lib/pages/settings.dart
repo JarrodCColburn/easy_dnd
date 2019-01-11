@@ -11,25 +11,11 @@ class SettingsPage extends StatefulWidget {
 class SettingsPageState extends State<SettingsPage> {
   List<RadioModel> settingsCards = new List<RadioModel>();
   bool status = false;
+  int newIndex;
 
   @override
   void initState() {
     super.initState();
-
-    int newIndex;
-    loadSelectedCard(newIndex);
-
-    if (newIndex == 0) {
-      status = true;
-    }    if (newIndex == 1) {
-      status = true;
-    }    if (newIndex == 2) {
-      status = true;
-    }    if (newIndex == 3) {
-      status = true;
-    }    if (newIndex == 4) {
-      status = true;
-    }
 
     settingsCards.add(RadioModel(
       status,
@@ -65,23 +51,41 @@ class SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Text('Easy DND'),
       ),
-      body: ListView.builder(
-        itemCount: settingsCards.length,
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                settingsCards.forEach((element) => element.isSelected = false);
-                settingsCards[index].isSelected = true;
-                saveSelectedCard(index);
-              });
-            },
-            child: RadioItem(settingsCards[index]),
-          );
-        },
-      ),
+      body: FutureBuilder(
+          future: loadSelectedCard(newIndex),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data != null) {
+                _getData(snapshot);
+                return ListView.builder(
+                    itemCount: settingsCards.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      newIndex = snapshot.data;
+                      settingsCards[newIndex].isSelected = true;
+
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            settingsCards.forEach(
+                                (element) => element.isSelected = false);
+                            settingsCards[index].isSelected = true;
+                            saveSelectedCard(index);
+                          });
+                        },
+                        child: RadioItem(settingsCards[index]),
+                      );
+                    });
+              }
+            }
+            return Text('LOADING...');
+          }),
     );
   }
+}
+
+Future _getData(AsyncSnapshot snapshot) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('card');
 }
 
 Future<bool> saveSelectedCard(int newIndex) async {
@@ -92,7 +96,6 @@ Future<bool> saveSelectedCard(int newIndex) async {
 Future<int> loadSelectedCard(int newIndex) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   newIndex = prefs.getInt('card');
-  print(newIndex);
   return newIndex;
 }
 
