@@ -13,6 +13,8 @@ class SettingsPageState extends State<SettingsPage> {
   bool status = false;
   int newIndex;
 
+  SettingsPageState();
+
   @override
   void initState() {
     super.initState();
@@ -62,6 +64,8 @@ class SettingsPageState extends State<SettingsPage> {
                     itemCount: settingsCards.length,
                     itemBuilder: (BuildContext context, int index) {
                       newIndex = snapshot.data;
+                      settingsCards.forEach(
+                              (element) => element.isSelected = false);
                       settingsCards[newIndex].isSelected = true;
                       return GestureDetector(
                         onTap: () {
