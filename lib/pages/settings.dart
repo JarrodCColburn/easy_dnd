@@ -47,12 +47,13 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot snapshot;
     return Scaffold(
       appBar: AppBar(
         title: Text('Easy DND'),
       ),
       body: FutureBuilder(
-          future: loadSelectedCard(newIndex),
+          future: _getData(snapshot),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data != null) {
@@ -62,7 +63,6 @@ class SettingsPageState extends State<SettingsPage> {
                     itemBuilder: (BuildContext context, int index) {
                       newIndex = snapshot.data;
                       settingsCards[newIndex].isSelected = true;
-
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -93,11 +93,6 @@ Future<bool> saveSelectedCard(int newIndex) async {
   return prefs.setInt('card', newIndex);
 }
 
-Future<int> loadSelectedCard(int newIndex) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  newIndex = prefs.getInt('card');
-  return newIndex;
-}
 
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
