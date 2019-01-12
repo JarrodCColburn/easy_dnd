@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:after_layout/after_layout.dart';
 
 class DrawInLeft extends StatefulWidget {
   final Widget child;
@@ -11,7 +12,7 @@ class DrawInLeft extends StatefulWidget {
   }
 }
 
-class DrawInLeftState extends State<DrawInLeft> with TickerProviderStateMixin {
+class DrawInLeftState extends State<DrawInLeft> with TickerProviderStateMixin, AfterLayoutMixin<DrawInLeft>{
   AnimationController _controller;
   Animation animation;
 
@@ -43,13 +44,17 @@ class DrawInLeftState extends State<DrawInLeft> with TickerProviderStateMixin {
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
-    _controller.forward();
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    _controller.forward();
   }
 }
 
@@ -64,7 +69,7 @@ State<StatefulWidget> createState() {
 }
 }
 
-class DrawInRightState extends State<DrawInRight> with TickerProviderStateMixin {
+class DrawInRightState extends State<DrawInRight> with TickerProviderStateMixin, AfterLayoutMixin<DrawInRight> {
   AnimationController _controller;
   Animation animation;
 
@@ -96,12 +101,17 @@ class DrawInRightState extends State<DrawInRight> with TickerProviderStateMixin 
       parent: _controller,
       curve: Curves.fastOutSlowIn,
     ));
-    _controller.forward();
+
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    _controller.forward();
   }
 }

@@ -81,7 +81,21 @@ class SettingsPageState extends State<SettingsPage> {
                     });
               }
             }
-            return Text('LOADING...');
+            return ListView.builder(
+                itemCount: settingsCards.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        settingsCards.forEach(
+                                (element) => element.isSelected = false);
+                        settingsCards[index].isSelected = true;
+                        saveSelectedCard(index);
+                      });
+                    },
+                    child: RadioItem(settingsCards[index]),
+                  );
+                });
           }),
     );
   }
