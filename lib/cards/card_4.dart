@@ -1,6 +1,6 @@
 import 'package:easy_dnd/pages/settings.dart';
 import 'package:flutter/material.dart';
-
+import 'package:page_transition/page_transition.dart';
 
 class CardFour extends StatefulWidget {
   @override
@@ -19,9 +19,8 @@ class _CardFourState extends State<CardFour> {
         splashColor: Colors.blueGrey,
         onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => SettingsPage(),
-              ),
+              PageTransition(
+                  child: SettingsPage(), type: PageTransitionType.scale),
             ),
         child: Center(
           child: Column(

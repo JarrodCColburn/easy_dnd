@@ -55,48 +55,55 @@ class SettingsPageState extends State<SettingsPage> {
         title: Text('Easy DND'),
       ),
       body: FutureBuilder(
-          future: _getData(snapshot),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data != null) {
-                _getData(snapshot);
-                return ListView.builder(
-                    itemCount: settingsCards.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      newIndex = snapshot.data;
-                      settingsCards.forEach(
-                              (element) => element.isSelected = false);
-                      settingsCards[newIndex].isSelected = true;
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            settingsCards.forEach(
-                                (element) => element.isSelected = false);
-                            settingsCards[index].isSelected = true;
-                            saveSelectedCard(index);
-                          });
-                        },
-                        child: RadioItem(settingsCards[index]),
-                      );
-                    });
-              }
-            }
-            return ListView.builder(
+        future: _getData(snapshot),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != null) {
+              _getData(snapshot);
+              return ListView.builder(
                 itemCount: settingsCards.length,
                 itemBuilder: (BuildContext context, int index) {
+                  newIndex = snapshot.data;
+                  settingsCards
+                      .forEach((element) => element.isSelected = false);
+                  settingsCards[newIndex].isSelected = true;
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        settingsCards.forEach(
-                                (element) => element.isSelected = false);
-                        settingsCards[index].isSelected = true;
-                        saveSelectedCard(index);
-                      });
+                      setState(
+                        () {
+                          settingsCards
+                              .forEach((element) => element.isSelected = false);
+                          settingsCards[index].isSelected = true;
+                          saveSelectedCard(index);
+                        },
+                      );
                     },
                     child: RadioItem(settingsCards[index]),
                   );
-                });
-          }),
+                },
+              );
+            }
+          }
+          return ListView.builder(
+            itemCount: settingsCards.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  setState(
+                    () {
+                      settingsCards
+                          .forEach((element) => element.isSelected = false);
+                      settingsCards[index].isSelected = true;
+                      saveSelectedCard(index);
+                    },
+                  );
+                },
+                child: RadioItem(settingsCards[index]),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -110,7 +117,6 @@ Future<bool> saveSelectedCard(int newIndex) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.setInt('card', newIndex);
 }
-
 
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
