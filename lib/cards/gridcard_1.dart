@@ -32,16 +32,19 @@ class GridCardOneState extends State<GridCardOne> {
                 pressed ? model.dndOn() : model.dndOff();
               },
               child: Center(
-                child: StreamBuilder<String>(
-                  stream: stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {}
-                    return Text(
-                      "${snapshot.data}",
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                      textAlign: TextAlign.center,
-                    );
-                  },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: StreamBuilder<String>(
+                    stream: stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {}
+                      return Text(
+                        "${snapshot.data}",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

@@ -16,4 +16,9 @@ class AppModel extends Model {
     await _platformChannel1.invokeMethod('OFF');
     notifyListeners();
   }
+
+  Future<Null> alarmsOnlyOn() async {
+    await _platformChannel1.invokeMethod('ALARMS ONLY ON');
+    notifyListeners();
+  }
 }

@@ -1,8 +1,6 @@
 import 'package:easy_dnd/animations/draw_in_effect.dart';
 import 'package:easy_dnd/cards/gridcard_1.dart';
-import 'package:easy_dnd/cards/card_2.dart';
-import 'package:easy_dnd/cards/card_3.dart';
-import 'package:easy_dnd/cards/card_4.dart';
+import 'package:easy_dnd/cards/gridcard_2.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,12 +17,9 @@ class HomePage extends StatelessWidget {
           mainAxisSpacing: 4.0,
           crossAxisCount: 2,
           children: <Widget>[
-            GridCardOne(),
+            DrawInLeft(child: GridCardOne()),
+            DrawInRight(child: GridCardTwo()),
 
-            DrawInRight(
-                child: GridCard(
-              color: Color.fromARGB(255, 3, 169, 244),
-            )),
             DrawInLeft(
                 child: GridCard(
               color: Color.fromARGB(255, 255, 87, 34),
