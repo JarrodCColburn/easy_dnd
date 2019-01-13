@@ -10,17 +10,21 @@ class CardOne extends StatefulWidget {
   }
 }
 
-class _CardOneState extends State<CardOne> with TickerProviderStateMixin {
+class _CardOneState extends State<CardOne> {
   bool pressed = false;
 
   @override
   Widget build(BuildContext context) {
     final stream = StatusInheritedWidget.of(context).inheritedStatusStream;
-    return Scaffold(
-      body: ScopedModel<AppModel>(
-        model: AppModel(),
-        child: ScopedModelDescendant<AppModel>(
-          builder: (context, child, model) => Card(
+    return
+//
+//      Scaffold(
+//      body: ScopedModel<AppModel>(
+//        model: AppModel(),
+//        child: ScopedModelDescendant<AppModel>(
+//          builder: (context, child, model) =>
+
+              Card(
                 color: Color.fromARGB(255, 76, 175, 80),
                 elevation: 5.0,
                 child: InkWell(
@@ -29,7 +33,7 @@ class _CardOneState extends State<CardOne> with TickerProviderStateMixin {
                     setState(() {
                       pressed = !pressed;
                     });
-                    pressed ? model.dndOn() : model.dndOff();
+//                    pressed ? model.dndOn() : model.dndOff();
                   },
                   child: Center(
                     child: Column(
@@ -55,9 +59,9 @@ class _CardOneState extends State<CardOne> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-              ),
-        ),
-      ),
-    );
+              );
+//        ),
+//      ),
+//    );
   }
 }
