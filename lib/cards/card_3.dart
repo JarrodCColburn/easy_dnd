@@ -18,7 +18,7 @@ class _CardThreeState extends State<CardThree> {
     await _platformChannel1.invokeMethod('OFF');
   }
 
-  Future<Null> _alarmsOnlyOn() async {
+  Future<Null> priorityOnlyOn() async {
     await _platformChannel1.invokeMethod('PRIORITY ONLY ON');
   }
 
@@ -34,7 +34,7 @@ class _CardThreeState extends State<CardThree> {
           setState(() {
             pressed = !pressed;
           });
-          pressed ? _alarmsOnlyOn() : _dndOff();
+          pressed ? priorityOnlyOn() : _dndOff();
         },
         child: Center(
           child: Column(
@@ -92,7 +92,7 @@ class _CardThreeState extends State<CardThree> {
                         );
                       }
                     }
-                    return new Container(width: 0.0, height: 0.0);
+
                   },
                 ),
               ),
