@@ -39,15 +39,6 @@ class GridCardTwoState extends State<GridCardTwo> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data
-                            .toString()
-                            .contains('All Interruptions Accepted')) {
-                          return Text(
-                            'Alarms are working',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          );
-                        } else if (snapshot.data
                                 .toString()
                                 .contains('No Interruptions Accepted') ||
                             snapshot.data.toString().contains(
@@ -69,6 +60,11 @@ class GridCardTwoState extends State<GridCardTwo> {
                           );
                         }
                       }
+                      return Text(
+                        'Alarms are working',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        textAlign: TextAlign.center,
+                      );
                     },
                   ),
                 ),

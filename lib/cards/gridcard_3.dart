@@ -39,15 +39,6 @@ class GridCardThreeState extends State<GridCardThree> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data
-                            .toString()
-                            .contains('All Interruptions Accepted')) {
-                          return Text('Priority Interruptions Accepted',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                              ),
-                              textAlign: TextAlign.center);
-                        } else if (snapshot.data
                                 .toString()
                                 .contains('No Interruptions Accepted') ||
                             snapshot.data
@@ -69,6 +60,12 @@ class GridCardThreeState extends State<GridCardThree> {
                           );
                         }
                       }
+                      return Text('Priority Interruptions Accepted',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                          textAlign: TextAlign.center);
                     },
                   ),
                 ),
