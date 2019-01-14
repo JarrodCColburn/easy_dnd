@@ -38,9 +38,9 @@ class GridCardFourState extends State<GridCardFour> {
               padding: EdgeInsets.only(bottom: 10.0),
             ),
             Icon(
-              Icons.touch_app,
+              Icons.settings,
               color: Colors.white70,
-              size: 80.0,
+              size: 50.0,
             ),
           ],
         ),

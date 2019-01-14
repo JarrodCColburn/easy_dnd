@@ -2,18 +2,18 @@ import 'package:easy_dnd/pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class GridCardFive extends StatefulWidget {
+class GridCardSix extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return GridCardFiveState();
+    return GridCardSixState();
   }
 }
 
-class GridCardFiveState extends State<GridCardFive> {
+class GridCardSixState extends State<GridCardSix> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 63, 81, 181),
+      color: Color.fromARGB(255, 156, 39, 176),
       elevation: 5.0,
       child: InkWell(
         splashColor: Colors.blueGrey,
@@ -27,7 +27,7 @@ class GridCardFiveState extends State<GridCardFive> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             (Text(
-              'Media Sounds ON',
+              'Notifications ON',
               style: TextStyle(color: Colors.white, fontSize: 20.0),
               textAlign: TextAlign.center,
             )),
@@ -35,7 +35,7 @@ class GridCardFiveState extends State<GridCardFive> {
               padding: EdgeInsets.only(bottom: 20.0),
             ),
             Icon(
-              Icons.mic,
+              Icons.notifications,
               color: Colors.white70,
               size: 50.0,
             ),

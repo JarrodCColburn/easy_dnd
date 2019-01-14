@@ -31,21 +31,42 @@ class GridCardOneState extends State<GridCardOne> {
                 });
                 pressed ? model.dndOn() : model.dndOff();
               },
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: StreamBuilder<String>(
-                    stream: stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {}
-                      return Text(
-                        "${snapshot.data}",
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                        textAlign: TextAlign.center,
-                      );
-                    },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: StreamBuilder<String>(
+                      stream: stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data.toString().contains('OFF')) {
+                            return Text(
+                              'DND OFF',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                              textAlign: TextAlign.center,
+                            );
+                          }
+                        }
+                        return Text(
+                          'DND ON',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                  ),
+                  Icon(
+                    Icons.do_not_disturb,
+                    color: Colors.white70,
+                    size: 50.0,
+                  ),
+                ],
               ),
             ),
           );

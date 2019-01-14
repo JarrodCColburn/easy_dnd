@@ -47,7 +47,7 @@ class GridCardTwoState extends State<GridCardTwo> {
                               snapshot.data.toString().contains(
                                   'No Interruptions Except Priority Ones')) {
                             return Text(
-                              'No Alarms',
+                              'Alarms OFF',
                               style: TextStyle(
                                   color: Colors.white, fontSize: 20.0),
                               textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class GridCardTwoState extends State<GridCardTwo> {
                               .toString()
                               .contains('No Interruptions Except Alarms')) {
                             return Text(
-                              'No Interruptions Except Alarms',
+                              'Alarms ON',
                               style: TextStyle(
                                   color: Colors.white, fontSize: 20.0),
                               textAlign: TextAlign.center,
@@ -64,7 +64,7 @@ class GridCardTwoState extends State<GridCardTwo> {
                           }
                         }
                         return Text(
-                          'Alarms are working',
+                          'Alarms ON',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                           textAlign: TextAlign.center,
                         );

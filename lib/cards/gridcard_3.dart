@@ -48,7 +48,7 @@ class GridCardThreeState extends State<GridCardThree> {
                                   .toString()
                                   .contains('No Interruptions Except Alarms')) {
                             return Text(
-                              'No Priority Interruptions',
+                              'Priority OFF',
                               style: TextStyle(
                                   color: Colors.white, fontSize: 20.0),
                               textAlign: TextAlign.center,
@@ -56,14 +56,14 @@ class GridCardThreeState extends State<GridCardThree> {
                           } else if (snapshot.data.toString().contains(
                               'No Interruptions Except Priority Ones')) {
                             return Text(
-                              'No Interruptions Except Priority Ones',
+                              'Priority ON',
                               style: TextStyle(
                                   color: Colors.white, fontSize: 20.0),
                               textAlign: TextAlign.center,
                             );
                           }
                         }
-                        return Text('Priority Interruptions Accepted',
+                        return Text('Priority ON',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
