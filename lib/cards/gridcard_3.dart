@@ -31,44 +31,56 @@ class GridCardThreeState extends State<GridCardThree> {
                 });
                 pressed ? model.priorityOnlyOn() : model.dndOff();
               },
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: StreamBuilder<String>(
-                    stream: stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        if (snapshot.data
-                                .toString()
-                                .contains('No Interruptions Accepted') ||
-                            snapshot.data
-                                .toString()
-                                .contains('No Interruptions Except Alarms')) {
-                          return Text(
-                            'No Priority Interruptions',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          );
-                        } else if (snapshot.data.toString().contains(
-                            'No Interruptions Except Priority Ones')) {
-                          return Text(
-                            'No Interruptions Except Priority Ones',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          );
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: StreamBuilder<String>(
+                      stream: stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data
+                                  .toString()
+                                  .contains('No Interruptions Accepted') ||
+                              snapshot.data
+                                  .toString()
+                                  .contains('No Interruptions Except Alarms')) {
+                            return Text(
+                              'No Priority Interruptions',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                              textAlign: TextAlign.center,
+                            );
+                          } else if (snapshot.data.toString().contains(
+                              'No Interruptions Except Priority Ones')) {
+                            return Text(
+                              'No Interruptions Except Priority Ones',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                              textAlign: TextAlign.center,
+                            );
+                          }
                         }
-                      }
-                      return Text('Priority Interruptions Accepted',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),
-                          textAlign: TextAlign.center);
-                    },
+                        return Text('Priority Interruptions Accepted',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                            textAlign: TextAlign.center);
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                  ),
+                  Icon(
+                    Icons.favorite,
+                    color: Colors.white70,
+                    size: 50.0,
+                  ),
+                ],
               ),
             ),
           );

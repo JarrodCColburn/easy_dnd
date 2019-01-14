@@ -22,7 +22,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blueGrey),
+        theme: ThemeData(
+            primarySwatch: Colors.blueGrey,
+            fontFamily: 'TitilliumWeb',),
         home: HomePage());
   }
 }

@@ -39,7 +39,7 @@ class GridCardFourState extends State<GridCardFour> {
             ),
             Icon(
               Icons.touch_app,
-              color: Colors.white,
+              color: Colors.white70,
               size: 80.0,
             ),
           ],

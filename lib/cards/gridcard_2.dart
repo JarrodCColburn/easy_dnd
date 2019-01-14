@@ -31,43 +31,55 @@ class GridCardTwoState extends State<GridCardTwo> {
                 });
                 pressed ? model.alarmsOnlyOn() : model.dndOff();
               },
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: StreamBuilder<String>(
-                    stream: stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        if (snapshot.data
-                                .toString()
-                                .contains('No Interruptions Accepted') ||
-                            snapshot.data.toString().contains(
-                                'No Interruptions Except Priority Ones')) {
-                          return Text(
-                            'No Alarms',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          );
-                        } else if (snapshot.data
-                            .toString()
-                            .contains('No Interruptions Except Alarms')) {
-                          return Text(
-                            'No Interruptions Except Alarms',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
-                            textAlign: TextAlign.center,
-                          );
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: StreamBuilder<String>(
+                      stream: stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data
+                                  .toString()
+                                  .contains('No Interruptions Accepted') ||
+                              snapshot.data.toString().contains(
+                                  'No Interruptions Except Priority Ones')) {
+                            return Text(
+                              'No Alarms',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                              textAlign: TextAlign.center,
+                            );
+                          } else if (snapshot.data
+                              .toString()
+                              .contains('No Interruptions Except Alarms')) {
+                            return Text(
+                              'No Interruptions Except Alarms',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                              textAlign: TextAlign.center,
+                            );
+                          }
                         }
-                      }
-                      return Text(
-                        'Alarms are working',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
-                        textAlign: TextAlign.center,
-                      );
-                    },
+                        return Text(
+                          'Alarms are working',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                  ),
+                  Icon(
+                    Icons.alarm,
+                    color: Colors.white70,
+                    size: 50.0,
+                  ),
+                ],
               ),
             ),
           );
