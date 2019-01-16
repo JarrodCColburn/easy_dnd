@@ -75,6 +75,7 @@ public class MainActivity extends FlutterActivity {
                     case "PRIORITY ONLY ON":
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+                        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
                         break;
                     default:
                         result.notImplemented();

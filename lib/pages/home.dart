@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
           DrawInRight(child: GridCardFour()),
           DrawInLeft(child: GridCardFive()),
           DrawInRight(child: GridCardSix()),
-          DrawInRight(child: GridCardSeven()),
+          DrawInLeft(child: GridCardSeven()),
           DrawInRight(child: GridCardEight()),
         ],
       ),
