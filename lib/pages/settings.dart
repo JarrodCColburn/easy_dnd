@@ -8,99 +8,70 @@ class SettingsPage extends StatefulWidget {
   }
 }
 
-class SettingsPageState extends State<SettingsPage> {
-  List<RadioModel> settingsCards = new List<RadioModel>();
-  bool status = false;
-  int newIndex;
+List<RadioModel> models = [
+  (RadioModel(
+    Icons.phone_in_talk,
+    Color.fromARGB(255, 76, 175, 80),
+    'All Phone Calls',
+  )),
+  (RadioModel(
+    Icons.contact_phone,
+    Color.fromARGB(255, 3, 169, 244),
+    'Contacts Only',
+  )),
+  (RadioModel(
+    Icons.star,
+    Color.fromARGB(255, 255, 87, 34),
+    'Starred Contacts Only',
+  )),
+  (RadioModel(
+    Icons.not_interested,
+    Color.fromARGB(255, 255, 193, 7),
+    'No Phone Calls',
+  )),
+  (RadioModel(
+      Icons.repeat, Color.fromARGB(255, 63, 81, 181), 'Allow Repeat Callers')),
+];
 
-  SettingsPageState();
+class SettingsPageState extends State<SettingsPage> {
+  List<RadioModel> settingsCards = <RadioModel>[];
+  int selected;
 
   @override
-  void initState() {
+  initState() {
+    setState(() {
+      settingsCards = models;
+    });
+    _getData().then(updateIdx);
     super.initState();
+  }
 
-    settingsCards.add(RadioModel(
-      status,
-      Icons.phone_in_talk,
-      Color.fromARGB(255, 76, 175, 80),
-      'All Phone Calls',
-     ));
-    settingsCards.add(RadioModel(
-      status,
-      Icons.contact_phone,
-      Color.fromARGB(255, 3, 169, 244),
-      'Contacts Only',
-    ));
-    settingsCards.add(RadioModel(
-      status,
-      Icons.star,
-      Color.fromARGB(255, 255, 87, 34),
-      'Starred Contacts Only',
-    ));
-    settingsCards.add(RadioModel(
-      status,
-      Icons.not_interested,
-      Color.fromARGB(255, 255, 193, 7),
-      'No Phone Calls',
-    ));
-    settingsCards.add(RadioModel(status, Icons.repeat,
-        Color.fromARGB(255, 63, 81, 181), 'Allow Repeat Callers'));
+  updateIdx(int idx) {
+    setState(() {
+      selected = idx;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    AsyncSnapshot snapshot;
     return Scaffold(
       appBar: AppBar(
         title: Text('Easy DND'),
       ),
-      body: FutureBuilder(
-        future: _getData(snapshot),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data != null) {
-              _getData(snapshot);
-              return ListView.builder(
-                itemCount: settingsCards.length,
-                itemBuilder: (BuildContext context, int index) {
-                  newIndex = snapshot.data;
-                  settingsCards
-                      .forEach((element) => element.isSelected = false);
-                  settingsCards[newIndex].isSelected = true;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          settingsCards
-                              .forEach((element) => element.isSelected = false);
-                          settingsCards[index].isSelected = true;
-                          saveSelectedCard(index);
-                        },
-                      );
-                    },
-                    child: RadioItem(settingsCards[index]),
-                  );
+      body: ListView.builder(
+        itemCount: settingsCards.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: () {
+              setState(
+                () {
+                  saveSelectedCard(index);
+                  updateIdx(index);
                 },
-              );
-            }
-          }
-          return ListView.builder(
-            itemCount: settingsCards.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(
-                    () {
-                      settingsCards
-                          .forEach((element) => element.isSelected = false);
-                      settingsCards[index].isSelected = true;
-                      saveSelectedCard(index);
-                    },
-                  );
-                },
-                child: RadioItem(settingsCards[index]),
               );
             },
+            child: RadioItem(
+                settingsCards[index], (selected == index) ? true : false),
           );
         },
       ),
@@ -108,7 +79,7 @@ class SettingsPageState extends State<SettingsPage> {
   }
 }
 
-Future _getData(AsyncSnapshot snapshot) async {
+Future<int> _getData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getInt('card');
 }
@@ -120,8 +91,9 @@ Future<bool> saveSelectedCard(int newIndex) async {
 
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
+  final bool _isSelected;
 
-  RadioItem(this._item);
+  RadioItem(this._item, this._isSelected);
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +108,7 @@ class RadioItem extends StatelessWidget {
             height: 124.0,
             margin: EdgeInsets.only(left: 46.0),
             decoration: BoxDecoration(
-                color: _item.isSelected ? Colors.blueGrey : _item.color,
+                color: _isSelected ? Colors.blueGrey : _item.color,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: <BoxShadow>[
@@ -159,7 +131,7 @@ class RadioItem extends StatelessWidget {
               width: 92.0,
               height: 92.0,
               decoration: new BoxDecoration(
-                color: _item.isSelected
+                color: _isSelected
                     ? Color.fromARGB(255, 69, 90, 100)
                     : Colors.orange,
                 shape: BoxShape.circle,
@@ -180,10 +152,9 @@ class RadioItem extends StatelessWidget {
 }
 
 class RadioModel {
-  bool isSelected;
   String titles;
   Color color;
   IconData icons;
 
-  RadioModel(this.isSelected, this.icons, this.color, this.titles);
+  RadioModel(this.icons, this.color, this.titles);
 }
