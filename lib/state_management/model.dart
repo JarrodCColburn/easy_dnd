@@ -8,12 +8,12 @@ class AppModel extends Model {
   MethodChannel('strangerweather.com/easy_dnd/receiver');
 
   Future<Null> dndOn() async {
-    await _platformChannel1.invokeMethod('ON');
+    await _platformChannel1.invokeMethod('DND ON');
     notifyListeners();
   }
 
   Future<Null> dndOff() async {
-    await _platformChannel1.invokeMethod('OFF');
+    await _platformChannel1.invokeMethod('DND OFF');
     notifyListeners();
   }
 
@@ -24,6 +24,11 @@ class AppModel extends Model {
 
   Future<Null> priorityOnlyOn() async {
     await _platformChannel1.invokeMethod('PRIORITY ONLY ON');
+    notifyListeners();
+  }
+
+  Future<Null> allPhoneCalls() async {
+    await _platformChannel1.invokeMethod('ALL PHONE CALLS');
     notifyListeners();
   }
 }

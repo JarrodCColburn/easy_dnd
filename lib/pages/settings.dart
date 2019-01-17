@@ -24,7 +24,7 @@ class SettingsPageState extends State<SettingsPage> {
       Icons.phone_in_talk,
       Color.fromARGB(255, 76, 175, 80),
       'All Phone Calls',
-    ));
+     ));
     settingsCards.add(RadioModel(
       status,
       Icons.contact_phone,

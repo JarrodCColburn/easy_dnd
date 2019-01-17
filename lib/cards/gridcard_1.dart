@@ -41,7 +41,7 @@ class GridCardOneState extends State<GridCardOne> {
                       stream: stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          if (snapshot.data.toString().contains('OFF')) {
+                          if (snapshot.data.toString().contains('DND OFF')) {
                             return Text(
                               'DND OFF',
                               style: TextStyle(

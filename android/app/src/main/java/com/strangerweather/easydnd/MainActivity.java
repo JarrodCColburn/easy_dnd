@@ -39,7 +39,7 @@ public class MainActivity extends FlutterActivity {
         assert mNotificationManager != null;
         if (mNotificationManager.isNotificationPolicyAccessGranted()) {
             streamStatus();
-            dndOn();
+            optionsCycle();
 
         } else {
             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
@@ -53,18 +53,18 @@ public class MainActivity extends FlutterActivity {
     }
 
 
-    private void dndOn() {
+    private void optionsCycle() {
         new MethodChannel(getFlutterView(), CHANNEL1).setMethodCallHandler(new MethodCallHandler() {
             final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
             @Override
             public void onMethodCall(MethodCall methodCall, Result result) {
                 switch (methodCall.method) {
-                    case "ON":
+                    case "DND ON":
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
                         break;
-                    case "OFF":
+                    case "DND OFF":
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
                         break;
@@ -72,10 +72,14 @@ public class MainActivity extends FlutterActivity {
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
                         break;
+                    case "ALARMS ONLY OFF":
+                        assert mNotificationManager != null;
+                        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
+                        break;
                     case "PRIORITY ONLY ON":
                         assert mNotificationManager != null;
                         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
-                        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALARMS);
+
                         break;
                     default:
                         result.notImplemented();
@@ -93,16 +97,16 @@ public class MainActivity extends FlutterActivity {
 
         switch (state) {
             case 1:
-                events.success(result = "OFF\n\nAll Interruptions Accepted");
+                events.success(result = "DND OFF");
                 break;
             case 2:
-                events.success(result = "ON\n\nNo Interruptions Except Priority Ones");
+                events.success(result = "PRIORITY ON");
                 break;
             case 3:
-                events.success(result = "ON\n\nNo Interruptions Accepted");
+                events.success(result = "DND ON");
                 break;
             case 4:
-                events.success(result = "ON\n\nNo Interruptions Except Alarms");
+                events.success(result = "ALARMS ON");
                 break;
             default:
                 events.error(result = "UNAVAILABLE", "Status Unavailable", null);
@@ -138,49 +142,56 @@ public class MainActivity extends FlutterActivity {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                String result = null;
                 String action = intent.getAction();
                 assert action != null;
                 if (action.equals(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED)) {
                     NotificationManager systemService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     assert systemService != null;
                     state = systemService.getCurrentInterruptionFilter();
-                    String result;
+
                     switch (state) {
                         case 1:
-                            events.success(result = "OFF\n\nAll Interruptions Accepted");
+                            events.success(result = "DND OFF");
                             break;
                         case 2:
-                            events.success(result = "ON\n\nNo Interruptions Except Priority Ones");
+                            events.success(result = "PRIORITY ON");
                             break;
                         case 3:
-                            events.success(result = "ON\n\nNo Interruptions Accepted");
+                            events.success(result = "DND ON");
                             break;
                         case 4:
-                            events.success(result = "ON\n\nNo Interruptions Except Alarms");
+                            events.success(result = "ALARMS ON");
                             break;
                         default:
                             events.error(result = "UNAVAILABLE", "Status Unavailable", null);
                             break;
                     }
                     events.success(result);
-                    saveData();
+
+                } else if (action.equals(NotificationManager.Policy.PRIORITY_SENDERS_ANY)) {
+                    events.success(result = "ALL PHONE CALLS");
+
                 }
+                events.success(result);
             }
         };
     }
 
 
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("State", state);
-        editor.apply();
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        int newState = sharedPreferences.getInt("State", state);
-    }
+//
+//
+//    private void saveData() {
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt("State", state);
+//        editor.apply();
+//    }
+//
+//    private void loadData() {
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+//        int newState = sharedPreferences.getInt("State", state);
+//    }
 
 }
 
